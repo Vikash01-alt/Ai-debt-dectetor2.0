@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Debt Detector | NEXSTROHUB</title>
+<style>
+:root {
+  --bg:#0b1020;
+  --panel:#141d31;
+  --muted:#a4afc3;
+  --white:#f7f9ff;
+  --green:#24c58b;
+  --blue:#668cff;
+  --border:#293650;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--white);
+  font-family:Inter,Arial,sans-serif;line-height:1.6;
+}
+header{
+  padding:22px 7%;display:flex;justify-content:space-between;
+  align-items:center;border-bottom:1px solid var(--border);
+}
+.logo{font-size:20px;font-weight:800;letter-spacing:1px}
+.logo span{color:var(--green)}
+header a{color:var(--muted);text-decoration:none;font-size:13px}
+.container{max-width:900px;margin:auto;padding:55px 20px}
+.hero{text-align:center;margin-bottom:38px}
+.tag{
+  display:inline-block;padding:6px 13px;border-radius:30px;
+  background:#173c37;color:var(--green);font-size:12px;
+}
+h1{font-size:clamp(32px,6vw,52px);line-height:1.15;margin:18px 0}
+h1 span{color:var(--green)}
+.hero p{color:var(--muted);max-width:650px;margin:auto}
+.card{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:16px;padding:27px;margin-bottom:20px;
+}
+h2{font-size:21px;margin-top:0}
+h3{font-size:16px}
+label{display:block;font-size:13px;margin:17px 0 7px;color:#dce4f3}
+input,select,textarea{
+  width:100%;padding:13px;background:#0d1527;
+  border:1px solid var(--border);border-radius:8px;
+  color:white;font-size:14px;outline:none;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--green)}
+textarea{min-height:115px;resize:vertical}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+button,.cta{
+  display:inline-block;background:var(--green);color:#06150f;
+  border:0;border-radius:9px;padding:15px 22px;
+  font-size:15px;font-weight:800;cursor:pointer;
+  text-decoration:none;text-align:center;
+}
+button:hover,.cta:hover{opacity:.88}
+.full{width:100%;margin-top:22px}
+.small{font-size:12px;color:var(--muted)}
+.result{display:none}
+.scorebox{text-align:center;padding:25px}
+.score{
+  font-size:65px;font-weight:900;color:var(--green);
+  line-height:1.2;
+}
+.bar{height:9px;background:#27344b;border-radius:10px;overflow:hidden}
+.fill{height:100%;background:var(--green);border-radius:10px}
+.metric{margin:18px 0}
+.metric-head{display:flex;justify-content:space-between;font-size:14px;margin-bottom:7px}
+.finding{
+  border-left:3px solid var(--green);
+  background:#101a2c;padding:13px 16px;
+  margin:12px 0;border-radius:5px;
+}
+.warning{border-left-color:#e5a54d}
+.report-note{
+  background:#19243a;border-radius:10px;
+  padding:14px;color:var(--muted);font-size:12px;
+}
+.cta-area{text-align:center;padding:25px 10px}
+.cta-area p{color:var(--muted)}
+footer{text-align:center;padding:25px;color:var(--muted);font-size:12px}
+@media(max-width:600px){
+  .grid{grid-template-columns:1fr}
+  .container{padding:35px 15px}
+  .card{padding:19px}
+  header{padding:17px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">NEXSTRO<span>HUB</span></div>
+  <a href="https://calendly.com/nesxtrohub/new-meeting" target="_blank">
+    Book an AI Intervention →
+  </a>
+</header>
+
+<main class="container">
+
+<section class="hero">
+  <span class="tag">FREE AI OPERATIONS DIAGNOSTIC</span>
+  <h1>Is Your Business<br><span>AI Ready?</span></h1>
+  <p>
+    Discover operational weaknesses, manual work,
+    automation opportunities and hidden AI implementation risks.
+    Get your preliminary AI Operational Readiness Score.
+  </p>
+</section>
+
+<section class="card" id="assessment">
+  <h2>01. Business Information</h2>
+
+  <label>Company / Business Name</label>
+  <input id="company" placeholder="Enter your company name">
+
+  <div class="grid">
+    <div>
+      <label>Company Website</label>
+      <input id="website" type="url" placeholder="https://example.com">
+    </div>
+    <div>
+      <label>LinkedIn Profile URL</label>
+      <input id="linkedin" type="url" placeholder="https://linkedin.com/in/...">
+    </div>
+  </div>
+
+  <label>LinkedIn Profile or Business Information</label>
+  <textarea id="profile" placeholder="Paste your public LinkedIn headline, About section, company description or relevant business information."></textarea>
+
+  <p class="small">
+    A URL alone does not guarantee profile analysis.
+    LinkedIn information must be supplied by the user.
+    Website scanning will be connected through the backend.
+  </p>
+</section>
+
+<section class="card" id="questions">
+  <h2>02. Operational Assessment</h2>
+  <p class="small">Answer these five questions honestly.</p>
+
+  <label>1. How much of your daily workflow is automated?</label>
+  <select id="automation">
+    <option value="1">Almost none</option>
+    <option value="2">Less than 25%</option>
+    <option value="3">25–50%</option>
+    <option value="4">50–75%</option>
+    <option value="5">More than 75%</option>
+  </select>
+
+  <label>2. How well documented are your business processes?</label>
+  <select id="documentation">
+    <option value="1">No documented processes</option>
+    <option value="2">Few informal documents</option>
+    <option value="3">Some documented SOPs</option>
+    <option value="4">Most processes documented</option>
+    <option value="5">Complete and regularly updated SOPs</option>
+  </select>
+
+  <label>3. How dependent are operations on specific employees?</label>
+  <select id="dependency">
+    <option value="1">Extremely dependent</option>
+    <option value="2">Highly dependent</option>
+    <option value="3">Moderately dependent</option>
+    <option value="4">Mostly independent</option>
+    <option value="5">Well-structured, distributed responsibility</option>
+  </select>
+
+  <label>4. How integrated are your AI tools with existing workflows?</label>
+  <select id="integration">
+    <option value="1">We don't use AI</option>
+    <option value="2">Only occasional AI usage</option>
+    <option value="3">AI used in individual tasks</option>
+    <option value="4">AI connected to some workflows</option>
+    <option value="5">AI integrated across key workflows</option>
+  </select>
+
+  <label>5. How do you monitor AI output quality and errors?</label>
+  <select id="control">
+    <option value="1">No monitoring</option>
+    <option value="2">Manual checks when problems occur</option>
+    <option value="3">Occasional quality checks</option>
+    <option value="4">Regular quality monitoring</option>
+    <option value="5">Defined testing, monitoring and accountability</option>
+  </select>
+</section>
+
+<section class="card">
+  <h2>03. Estimate Your Operational Exposure</h2>
+  <p class="small">Optional financial inputs make the opportunity estimate more meaningful.</p>
+
+  <div class="grid">
+    <div>
+      <label>Manual work hours per month</label>
+      <input id="hours" type="number" min="0" placeholder="100">
+    </div>
+    <div>
+      <label>Average hourly labor cost (USD)</label>
+      <input id="rate" type="number" min="0" step="0.01" placeholder="25">
+    </div>
+  </div>
+
+  <label>Monthly rework / error costs (USD)</label>
+  <input id="rework" type="number" min="0" placeholder="500">
+
+  <button class="full" onclick="generateAudit()">
+    GENERATE MY AI AUDIT →
+  </button>
+  <p class="small">
+    Preliminary assessment based on your answers.
+    No financial savings are guaranteed.
+  </p>
+</section>
+
+<section class="result" id="result">
+
+  <div class="card scorebox">
+    <span class="tag">YOUR DIAGNOSTIC REPORT</span>
+    <div class="score" id="totalScore">0</div>
+    <h2 id="scoreLabel">AI Readiness Score</h2>
+    <p id="scoreSummary" class="small"></p>
+  </div>
+
+  <div class="card">
+    <h2>04. Five-Point Audit Results</h2>
+    <div id="metrics"></div>
+  </div>
+
+  <div class="card">
+    <h2>05. Critical Findings</h2>
+    <div id="findings"></div>
+  </div>
+
+  <div class="card">
+    <h2>06. Estimated Operational Exposure</h2>
+    <div class="score" style="font-size:35px" id="exposure">$0</div>
+    <p class="small" id="exposureText"></p>
+    <div class="report-note">
+      This is an estimate of the labor and rework costs entered
+      by the user, not verified AI savings or confirmed automation debt.
+      Actual recoverable costs require workflow-level analysis.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>07. Recommended Actions</h2>
+    <div id="actions"></div>
+  </div>
+
+  <div class="card cta-area">
+    <span class="tag">YOUR NEXT STEP</span>
+    <h2>Stop Guessing. Start Fixing.</h2>
+    <p>
+      Discover which operational decisions and workflows
+      should be improved before investing in more AI tools.
+    </p>
+    <a class="cta" href="https://calendly.com/nesxtrohub/new-meeting"
+       target="_blank" rel="noopener">
+       BOOK YOUR 15-MINUTE AI INTERVENTION →
+    </a>
+    <p class="small">NEXSTROHUB | AI Operations & Business Systems Setup</p>
+  </div>
+
+  <button class="full" onclick="window.print()">
+    PRINT / SAVE MY AUDIT
+  </button>
+
+</section>
+
+</main>
+
+<footer>
+  © 2026 NEXSTROHUB. All rights reserved.<br>
+  Preliminary diagnostic tool. Not a financial audit or guarantee.
+</footer>
+
+<script>
+const dimensions = [
+  {id:"automation",name:"Workflow Automation",
+   weak:"Many repetitive activities may still require manual work.",
+   action:"Map repetitive workflows and prioritize high-frequency tasks."},
+
+  {id:"documentation",name:"Knowledge Readiness",
+   weak:"Business processes may not be documented sufficiently for reliable AI use.",
+   action:"Create SOPs and centralize business knowledge."},
+
+  {id:"dependency",name:"Human Dependency",
+   weak:"Important operational activities may rely heavily on individual employees.",
+   action:"Document decision rules and define responsibilities."},
+
+  {id:"integration",name:"AI Integration",
+   weak:"AI usage may be disconnected from actual business workflows.",
+   action:"Connect suitable AI tools to measurable business processes."},
+
+  {id:"control",name:"Operational Control",
+   weak:"AI outputs may lack consistent quality checks and accountability.",
+   action:"Introduce human review, testing and monitoring."}
+];
+
+function generateAudit(){
+
+  const company = document.getElementById("company").value.trim();
+
+  if(!company){
+    alert("Please enter your company name.");
+    return;
+  }
+
+  const scores = dimensions.map(d => ({
+    name:d.name,
+    score:Number(document.getElementById(d.id).value)*20,
+    weak:d.weak,
+    action:d.action
+  }));
+
+  const total = Math.round(
+    scores.reduce((sum,item)=>sum+item.score,0)/scores.length
+  );
+
+  let label,summary;
+
+  if(total < 40){
+    label="Critical Operational Gaps";
+    summary="Your business has significant readiness gaps. Fix core workflows before expanding AI usage.";
+  }else if(total < 60){
+    label="Developing AI Readiness";
+    summary="Some foundations exist, but your processes need improvement before scaling AI.";
+  }else if(total < 80){
+    label="Moderate AI Readiness";
+    summary="Your business has a useful foundation. Focus on integration and operational controls.";
+  }else{
+    label="Strong AI Readiness";
+    summary="Your business demonstrates strong foundations. Focus on optimization and continuous improvement.";
+  }
+
+  document.getElementById("totalScore").textContent=total+"/100";
+  document.getElementById("scoreLabel").textContent=label;
+  document.getElementById("scoreSummary").textContent=summary;
+
+  document.getElementById("metrics").innerHTML=scores.map(s=>`
+    <div class="metric">
+      <div class="metric-head">
+        <span>${s.name}</span>
+        <strong>${s.score}/100</strong>
+      </div>
+      <div class="bar">
+        <div class="fill" style="width:${s.score}%"></div>
+      </div>
+    </div>
+  `).join("");
+
+  const weakest=[...scores].sort((a,b)=>a.score-b.score);
+
+  document.getElementById("findings").innerHTML=weakest
+    .filter(s=>s.score<60)
+    .slice(0,3)
+    .map(s=>`
+      <div class="finding warning">
+        <strong>${s.name}</strong><br>
+        ${s.weak}
+      </div>
+    `).join("") || `
+      <div class="finding">
+        No major weaknesses identified by this preliminary questionnaire.
+        Further workflow-level verification is recommended.
+      </div>
+    `;
+
+  const hours=Math.max(0,Number(document.getElementById("hours").value)||0);
+  const rate=Math.max(0,Number(document.getElementById("rate").value)||0);
+  const rework=Math.max(0,Number(document.getElementById("rework").value)||0);
+
+  const exposure=(hours*rate)+rework;
+
+  document.getElementById("exposure").textContent=
+    "$"+exposure.toLocaleString("en-US",{maximumFractionDigits:2});
+
+  document.getElementById("exposureText").textContent=
+    "Estimated monthly labor and rework cost based on your inputs. This is not a verified automation saving.";
+
+  document.getElementById("actions").innerHTML=weakest
+    .slice(0,3)
+    .map((s,i)=>`
+      <div class="finding">
+        <strong>Priority ${i+1}: ${s.name}</strong><br>
+        ${s.action}
+      </div>
+    `).join("");
+
+  const report=document.getElementById("result");
+  report.style.display="block";
+
+  report.scrollIntoView({behavior:"smooth"});
+}
+</script>
+</body>
+  </html>
